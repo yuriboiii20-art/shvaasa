@@ -1,0 +1,105 @@
+{
+  "doctor": {
+    "request_sent": false,
+    "sucess": false,
+    "failure": false
+  },
+  "practice": {
+    "request_sent": false,
+    "sucess": false,
+    "failure": false
+  },
+  "reviews": [],
+  "surgeries": {
+    "page": 1,
+    "total": 5,
+    "items": [
+      {
+        "id": "0000000043000000038da052",
+        "name": "Impacted Ear wax and Ear syringing",
+        "iconUrl": "https://www.practostatic.com/content-service/static-assets/icons/specialities/ear_nore_throat.png",
+        "type": "SERVICE",
+        "minCost": null,
+        "maxCost": null,
+        "patientStoryCount": 0,
+        "mediaStats": [
+          {
+            "stats": {
+              "photoCount": 0,
+              "videoCount": 0
+            }
+          }
+        ]
+      },
+      {
+        "id": "0000000043000000038da050",
+        "name": "Ear & Nose Piercing",
+        "iconUrl": "https://www.practostatic.com/content-service/static-assets/icons/specialities/ear_nore_throat.png",
+        "type": "SERVICE",
+        "minCost": null,
+        "maxCost": null,
+        "patientStoryCount": 0,
+        "mediaStats": [
+          {
+            "stats": {
+              "photoCount": 0,
+              "videoCount": 0
+            }
+          }
+        ]
+      },
+      {
+        "id": "0000000043000000038da04c",
+        "name": "Skin Allergy Treatment",
+        "iconUrl": "https://www.practostatic.com/content-service/static-assets/icons/services/skin_allergies.png",
+        "type": "SERVICE",
+        "minCost": null,
+        "maxCost": null,
+        "patientStoryCount": 0,
+        "mediaStats": [
+          {
+            "stats": {
+              "photoCount": 0,
+              "videoCount": 0
+            }
+          }
+        ]
+      },
+      {
+        "id": "0000000043000000038da04a",
+        "name": "Food allergies specific Diet plans",
+        "iconUrl": "https://www.practostatic.com/content-service/static-assets/icons/specialities/diet_and_nutrition.png",
+        "type": "SERVICE",
+        "minCost": null,
+        "maxCost": null,
+        "patientStoryCount": 0,
+        "mediaStats": [
+          {
+            "stats": {
+              "photoCount": 0,
+              "videoCount": 0
+            }
+          }
+        ]
+      },
+      {
+        "id": "6a926503df2fe3cc33a4290e",
+        "name": "Food allergy treatment",
+        "iconUrl": "https://www.practostatic.com/marketplace-api/doctor-profile/service_placeholder_image.png",
+        "type": "SERVICE",
+        "minCost": null,
+        "maxCost": null,
+        "patientStoryCount": 0,
+        "mediaStats": [
+          {
+            "stats": {
+              "photoCount": 0,
+              "videoCount": 0
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "media": []
+}
