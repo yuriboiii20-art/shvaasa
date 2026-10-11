@@ -709,34 +709,111 @@ button, input, select, textarea {
   justify-content: center;
 }
 
-.doctor-card-frame {
+.doctor-card-frame,
+.clinic-hero-slider-frame {
   position: relative;
   width: 100%;
-  max-width: 440px;
+  max-width: 480px;
   background: #ffffff;
   border-radius: var(--radius-xl);
-  padding: 1.5rem;
+  padding: 1.25rem;
   box-shadow: var(--shadow-xl);
   border: 1px solid rgba(0, 131, 143, 0.16);
 }
 
-.doctor-card-img-wrap {
+/* 3-Second Automatic Clinic Infrastructure Slideshow */
+.hero-slideshow-container {
   position: relative;
+  width: 100%;
+  height: 380px;
   border-radius: var(--radius-lg);
   overflow: hidden;
-  background: linear-gradient(180deg, #e0f2fe 0%, #c7e8fa 100%);
+  background: var(--primary-navy-dark);
 }
 
-.doctor-img {
+.hero-slide {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
-  height: 440px;
-  object-fit: cover;
-  object-position: top center;
-  transition: transform var(--transition-normal);
+  height: 100%;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.85s cubic-bezier(0.4, 0, 0.2, 1), transform 1.2s ease;
+  transform: scale(1.03);
+  z-index: 1;
 }
 
-.doctor-card-frame:hover .doctor-img {
-  transform: scale(1.02);
+.hero-slide.active {
+  opacity: 1;
+  visibility: visible;
+  transform: scale(1);
+  z-index: 2;
+}
+
+.hero-slide-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.hero-slide-caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 1.25rem 1.25rem 0.85rem 1.25rem;
+  background: linear-gradient(to top, rgba(9, 35, 63, 0.92) 0%, rgba(9, 35, 63, 0) 100%);
+  color: #ffffff;
+  font-size: 0.885rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  z-index: 3;
+}
+
+.hero-slide-indicators {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.85rem;
+}
+
+.hero-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--border-light);
+  border: none;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  padding: 0;
+}
+
+.hero-dot.active {
+  width: 24px;
+  border-radius: var(--radius-full);
+  background: var(--brand-teal);
+}
+
+.facility-meta-strip {
+  margin-top: 0.85rem;
+  padding-top: 0.75rem;
+  border-top: 1px dashed var(--border-light);
+  text-align: center;
+}
+
+.facility-meta-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--primary-navy);
+}
+
+.facility-meta-sub {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin-top: 2px;
 }
 
 /* Floating credential badges */
@@ -792,37 +869,6 @@ button, input, select, textarea {
 .float-sub {
   font-size: 0.74rem;
   color: var(--text-muted);
-}
-
-.doctor-meta-strip {
-  margin-top: 1.25rem;
-  text-align: center;
-  padding: 0.85rem 0.5rem 0.25rem 0.5rem;
-  border-top: 1px dashed var(--border-light);
-}
-
-.doctor-meta-name {
-  font-size: 1.3rem;
-  font-weight: 800;
-  color: var(--primary-navy);
-}
-
-.doctor-meta-title {
-  font-size: 0.85rem;
-  color: var(--brand-teal);
-  font-weight: 600;
-  margin-top: 2px;
-}
-
-.doctor-meta-fee {
-  display: inline-block;
-  margin-top: 0.5rem;
-  font-size: 0.76rem;
-  font-weight: 700;
-  background-color: var(--brand-green-soft);
-  color: var(--brand-green-dark);
-  padding: 0.25rem 0.85rem;
-  border-radius: var(--radius-full);
 }
 
 /* ===================================================================
@@ -931,13 +977,22 @@ button, input, select, textarea {
   overflow: hidden;
   box-shadow: var(--shadow-xl);
   border: 8px solid #ffffff;
-  background: #f8fafc;
+  background: linear-gradient(180deg, #f0fdfa 0%, #e2e8f0 100%);
+  max-width: 440px;
+  margin: 0 auto;
 }
 
 .about-primary-img {
   width: 100%;
-  height: auto;
+  height: 480px;
   object-fit: cover;
+  object-position: top center;
+  display: block;
+  transition: transform var(--transition-normal);
+}
+
+.about-primary-img-wrap:hover .about-primary-img {
+  transform: scale(1.02);
 }
 
 .about-experience-badge {

@@ -5,6 +5,7 @@
 
 document.addEventListener('DOMContentLoaded', () => {
   initLiveClinicStatus();
+  initHeroSlideshow();
   initMobileDrawer();
   initTabs();
   initCarousels();
@@ -905,3 +906,72 @@ function initCustomDatePicker() {
     }
   });
 }
+
+/* ===================================================================
+   12. Hero Section 3-Second Automatic Clinic Slideshow
+   =================================================================== */
+function initHeroSlideshow() {
+  const container = document.getElementById('heroSlideshow');
+  if (!container) return;
+  const slides = container.querySelectorAll('.hero-slide');
+  const dots = document.querySelectorAll('.hero-dot');
+  if (slides.length <= 1) return;
+
+  let currentIndex = 0;
+  let timer = null;
+
+  function goToSlide(index) {
+    slides[currentIndex].classList.remove('active');
+    if (dots[currentIndex]) dots[currentIndex].classList.remove('active');
+
+    currentIndex = (index + slides.length) % slides.length;
+
+    slides[currentIndex].classList.add('active');
+    if (dots[currentIndex]) dots[currentIndex].classList.add('active');
+  }
+
+  function nextSlide() {
+    goToSlide(currentIndex + 1);
+  }
+
+  function startTimer() {
+    stopTimer();
+    timer = setInterval(nextSlide, 3000); // Changes automatically every 3 seconds
+  }
+
+  function stopTimer() {
+    if (timer) clearInterval(timer);
+  }
+
+  dots.forEach(dot => {
+    dot.addEventListener('click', () => {
+      const targetIndex = parseInt(dot.getAttribute('data-slide') || '0', 10);
+      goToSlide(targetIndex);
+      startTimer();
+    });
+  });
+
+  // Pause on mouse hover, resume on mouse leave
+  container.addEventListener('mouseenter', stopTimer);
+  container.addEventListener('mouseleave', startTimer);
+
+  // Touch swipe support on mobile devices
+  let touchStartX = 0;
+  container.addEventListener('touchstart', (e) => {
+    touchStartX = e.touches[0].clientX;
+    stopTimer();
+  }, { passive: true });
+
+  container.addEventListener('touchend', (e) => {
+    const touchEndX = e.changedTouches[0].clientX;
+    const diff = touchStartX - touchEndX;
+    if (Math.abs(diff) > 40) {
+      if (diff > 0) nextSlide();
+      else goToSlide(currentIndex - 1);
+    }
+    startTimer();
+  }, { passive: true });
+
+  startTimer();
+}
+
