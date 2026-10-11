@@ -440,8 +440,9 @@ function initCarousels() {
       const track = document.getElementById(targetId);
       if (!track) return;
       const isPrev = btn.classList.contains('prev-btn');
+      const slide = track.querySelector('.testi-slide');
       const card = track.querySelector('.compact-service-card, .gallery-compact-card');
-      const step = card ? card.offsetWidth + 20 : 320;
+      const step = slide ? track.offsetWidth : (card ? card.offsetWidth + 20 : 320);
       track.scrollBy({ left: isPrev ? -step : step, behavior: 'smooth' });
     });
   });
@@ -450,9 +451,9 @@ function initCarousels() {
   const testiTrack = document.getElementById('testimonialTrack');
   const dots = document.querySelectorAll('.testi-dot');
   if (testiTrack && dots.length > 0) {
-    dots.forEach(dot => {
+    dots.forEach((dot, index) => {
       dot.addEventListener('click', () => {
-        const slideIndex = parseInt(dot.getAttribute('data-slide') || '0', 10);
+        const slideIndex = parseInt(dot.getAttribute('data-index') || dot.getAttribute('data-slide') || String(index), 10);
         const slideWidth = testiTrack.offsetWidth;
         testiTrack.scrollTo({ left: slideIndex * slideWidth, behavior: 'smooth' });
         dots.forEach(d => d.classList.remove('active'));

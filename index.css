@@ -3004,27 +3004,48 @@ html, body {
   box-shadow: var(--shadow-sm);
 }
 
+/* Testimonial Slider Controls */
+.testimonial-controls-bar {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 1.25rem !important;
+  margin-top: 1.5rem !important;
+  width: 100% !important;
+  flex-wrap: nowrap !important;
+}
+
+.testimonial-controls-bar .carousel-btn {
+  flex-shrink: 0 !important;
+  margin: 0 !important;
+}
+
 .testi-dots {
-  display: flex;
-  justify-content: center;
-  gap: 0.5rem;
-  margin-top: 1.25rem;
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 0.6rem !important;
+  margin: 0 !important;
 }
 
 .testi-dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: var(--border-light);
-  border: none;
-  cursor: pointer;
-  transition: all var(--transition-fast);
+  width: 10px !important;
+  height: 10px !important;
+  border-radius: 50% !important;
+  background: var(--border-light) !important;
+  border: none !important;
+  cursor: pointer !important;
+  transition: all var(--transition-fast) !important;
+  padding: 0 !important;
+  display: inline-block !important;
 }
 
 .testi-dot.active {
-  width: 28px;
-  border-radius: var(--radius-full);
-  background: var(--brand-teal);
+  width: 28px !important;
+  border-radius: var(--radius-full) !important;
+  background: var(--brand-teal) !important;
 }
 
 
