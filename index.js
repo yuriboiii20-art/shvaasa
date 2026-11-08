@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initMobileDrawer();
   initTabs();
   initCarousels();
+  initTestimonialsSlider();
   initCustomSelects();
   initCustomDatePicker();
   initFaqAccordion();
@@ -237,7 +238,7 @@ function initBookingEngine() {
       'Recurrent Ear Infections in Children'
     ],
     'General': [
-      'General ENT & Airway Consultation (₹1000)',
+      'General ENT & Airway Consultation',
       'Second Opinion on ENT Surgery',
       'Post-Operative Follow Up'
     ]
@@ -287,7 +288,7 @@ function initBookingEngine() {
       // Setup WhatsApp Action
       if (modalWhatsappBtn) {
         const text = encodeURIComponent(
-          `Hello Dr. Swathi N / SHVAASA Center,\n\nI have submitted an appointment request:\nReference: ${refId}\nName: ${patientName}\nPhone: ${patientPhone}\nDate: ${patientDate} at ${patientSlot}\nService: ${patientService}\nConsultation Fee: ₹1000 (Pay at Clinic)\n\nPlease confirm my slot.`
+          `Hello Dr. Swathi N / SHVAASA Center,\n\nI have submitted an appointment request:\nReference: ${refId}\nName: ${patientName}\nPhone: ${patientPhone}\nDate: ${patientDate} at ${patientSlot}\nService: ${patientService}\nPayment: Pay at Clinic\n\nPlease confirm my slot.`
         );
         modalWhatsappBtn.href = `https://wa.me/919845012345?text=${text}`;
       }
@@ -448,30 +449,107 @@ function initCarousels() {
       track.scrollBy({ left: isPrev ? -step : step, behavior: 'smooth' });
     });
   });
+}
 
-  // Testimonials dot pagination
+/* ===================================================================
+   9b. Creative Testimonials Showcase & Interactive Filter Engine
+   =================================================================== */
+function initTestimonialsSlider() {
   const testiTrack = document.getElementById('testimonialTrack');
-  const dots = document.querySelectorAll('.testi-dot');
-  if (testiTrack && dots.length > 0) {
-    dots.forEach((dot, index) => {
-      dot.addEventListener('click', () => {
-        const slideIndex = parseInt(dot.getAttribute('data-index') || dot.getAttribute('data-slide') || String(index), 10);
-        const slideWidth = testiTrack.offsetWidth;
-        testiTrack.scrollTo({ left: slideIndex * slideWidth, behavior: 'smooth' });
-        dots.forEach(d => d.classList.remove('active'));
-        dot.classList.add('active');
-      });
-    });
+  const dotsContainer = document.getElementById('testimonialDots');
+  const filterChips = document.querySelectorAll('.testi-filter-chip');
+  if (!testiTrack) return;
 
-    testiTrack.addEventListener('scroll', () => {
+  const allSlides = Array.from(testiTrack.querySelectorAll('.testi-slide'));
+  let autoplayTimer = null;
+
+  function getVisibleSlides() {
+    return allSlides.filter(s => s.style.display !== 'none');
+  }
+
+  function updateActiveDot(index) {
+    if (!dotsContainer) return;
+    const dots = dotsContainer.querySelectorAll('.testi-dot');
+    dots.forEach((dot, idx) => {
+      dot.classList.toggle('active', idx === index);
+    });
+  }
+
+  function renderDots() {
+    if (!dotsContainer) return;
+    const visible = getVisibleSlides();
+    dotsContainer.innerHTML = '';
+    visible.forEach((_, idx) => {
+      const dot = document.createElement('span');
+      dot.className = `testi-dot ${idx === 0 ? 'active' : ''}`;
+      dot.setAttribute('data-index', idx);
+      dot.setAttribute('aria-label', `Go to testimonial slide ${idx + 1}`);
+      dot.addEventListener('click', () => {
+        const slideWidth = testiTrack.offsetWidth;
+        testiTrack.scrollTo({ left: idx * slideWidth, behavior: 'smooth' });
+        updateActiveDot(idx);
+      });
+      dotsContainer.appendChild(dot);
+    });
+  }
+
+  testiTrack.addEventListener('scroll', () => {
+    const slideWidth = testiTrack.offsetWidth;
+    if (!slideWidth) return;
+    const activeIndex = Math.round(testiTrack.scrollLeft / slideWidth);
+    updateActiveDot(activeIndex);
+  }, { passive: true });
+
+  // Filter Chips Click Interaction
+  filterChips.forEach(chip => {
+    chip.addEventListener('click', () => {
+      filterChips.forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+      const filter = chip.getAttribute('data-filter');
+
+      allSlides.forEach(slide => {
+        const cat = slide.getAttribute('data-category');
+        if (filter === 'all' || cat === filter) {
+          slide.style.display = 'block';
+        } else {
+          slide.style.display = 'none';
+        }
+      });
+
+      testiTrack.scrollTo({ left: 0, behavior: 'smooth' });
+      renderDots();
+    });
+  });
+
+  // Autoplay with Hover & Touch Pause
+  function startAutoplay() {
+    stopAutoplay();
+    autoplayTimer = setInterval(() => {
+      const visible = getVisibleSlides();
+      if (visible.length <= 1) return;
       const slideWidth = testiTrack.offsetWidth;
       if (!slideWidth) return;
-      const activeIndex = Math.round(testiTrack.scrollLeft / slideWidth);
-      dots.forEach((dot, idx) => {
-        dot.classList.toggle('active', idx === activeIndex);
-      });
-    }, { passive: true });
+      const currentIndex = Math.round(testiTrack.scrollLeft / slideWidth);
+      const nextIndex = (currentIndex + 1) % visible.length;
+      testiTrack.scrollTo({ left: nextIndex * slideWidth, behavior: 'smooth' });
+      updateActiveDot(nextIndex);
+    }, 5500);
   }
+
+  function stopAutoplay() {
+    if (autoplayTimer) {
+      clearInterval(autoplayTimer);
+      autoplayTimer = null;
+    }
+  }
+
+  testiTrack.addEventListener('mouseenter', stopAutoplay);
+  testiTrack.addEventListener('mouseleave', startAutoplay);
+  testiTrack.addEventListener('touchstart', stopAutoplay, { passive: true });
+  testiTrack.addEventListener('touchend', startAutoplay, { passive: true });
+
+  renderDots();
+  startAutoplay();
 }
 
 

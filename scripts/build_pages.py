@@ -106,7 +106,7 @@ template = '''<!DOCTYPE html>
         </p>
         <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
           <a href="index.html" class="btn btn-primary">Return to Home Page</a>
-          <a href="index.html#book-appointment" class="btn btn-secondary">Book Consultation (₹1000)</a>
+          <a href="index.html#book-appointment" class="btn btn-secondary">Book Consultation</a>
         </div>
       </div>
     </div>
